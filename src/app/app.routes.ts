@@ -12,12 +12,17 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardPage },
+<<<<<<< HEAD
             { path: 'patients', component: PatientPage },
             {path:'practitioners', component: PractitionerPage},
             {path:'specializations',component:SpecializationPage}
             
             
 
+=======
+            { path: 'facility' , loadChildren: () => import('./features/facility/facility.routes') },
+            { path: 'staff' , loadChildren: () => import('./features/Staff/staff.route') },
+>>>>>>> origin/main
         ]
     }
 ];

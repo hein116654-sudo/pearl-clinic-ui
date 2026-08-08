@@ -89,17 +89,17 @@ export class AppMenu {
                     {
                         label: 'Practitioners',
                         icon: 'pi pi-user',
-                        routerLink: ['/practitioners']
+                        routerLink: ['/staff/practitioners']
                     },
                     {
                         label: 'Specializations',
                         icon: 'pi pi-briefcase',
-                        routerLink: ['/specializations']
+                        routerLink: ['/staff/specializations']
                     },
                     {
                         label: 'Schedules',
                         icon: 'pi pi-clock',
-                        routerLink: ['/schedules']
+                        routerLink: ['/staff/schedules']
                     }
                 ]
             },
@@ -110,7 +110,7 @@ export class AppMenu {
                     {
                         label: 'Rooms',
                         icon: 'pi pi-building',
-                        routerLink: ['/rooms']
+                        routerLink: ['facility/room-list']
                     }
                 ]
             }
