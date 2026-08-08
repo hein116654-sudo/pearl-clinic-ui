@@ -31,7 +31,6 @@ export class RoomList {
         this.isLoading.set(false);
       },
       error: (error) => {
-        this.errorMessage.set('Failed to fetch rooms. Please try again later.');
         this.isLoading.set(false);
       },
     });
