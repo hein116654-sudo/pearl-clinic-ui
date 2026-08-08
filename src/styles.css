@@ -1,3 +1,213 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import "tailwindcss";
+@import "primeicons/primeicons.css";
+
+:root {
+    --primary-color: #0f766e;
+    --topbar-height: 4.5rem;
+    --sidebar-width: 280px;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans, Inter, system-ui, sans-serif);
+    background-color: #f8fafc;
+    color: #1e293b;
+    -webkit-font-smoothing: antialiased;
+}
+
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ------------------------------------------------------------------ */
+/* 🚀 TOPBAR STYLING (အပေါ်ပင်မဘား တစ်ခုလုံးကို နေရာချခြင်း)          */
+/* ------------------------------------------------------------------ */
+
+.layout-topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--topbar-height);
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+
+/* LOGO CONTAINER */
+.layout-topbar-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.layout-topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.025em;
+}
+
+.layout-topbar-logo svg {
+    width: 2.25rem;
+    height: 2.25rem;
+}
+
+/* ACTIONS WRAPPER (ညာဘက်ခြမ်း ခလုတ်များစုစည်းမှု) */
+.layout-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.layout-config-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.layout-topbar-menu-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 🎯 ICON BUTTONS (စဝိုင်းပုံစံ ခလုတ်လေးများ ဖြစ်စေရန်) */
+.layout-topbar-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    color: #475569;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.layout-topbar-action:hover {
+    background-color: #f1f5f9;
+    color: var(--primary-color);
+}
+
+.layout-topbar-action i {
+    font-size: 1.25rem;
+}
+
+/* Premium Highlight State (ဥပမာ Palette ခလုတ်အတွက်) */
+.layout-topbar-action-highlight {
+    color: var(--primary-color);
+    background-color: #f0fdfa;
+}
+
+/* image_754c29.jpg ကဲ့သို့ သန့်ရှင်းစေရန် ခလုတ်စာသားများကို ဖျောက်ထားခြင်း */
+.layout-topbar-action span {
+    display: none;
+}
+
+/* Mobile Toggle Ellipsis Button (Mobile မှာပဲ ပြပြီး Desktop မှာ ဖျောက်ထားမည်) */
+.layout-topbar-menu-button {
+    display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* SIDEBAR & MAIN CONTAINER (ဘေးမီနူးနှင့် Dashboard ဧရိယာ)          */
+/* ------------------------------------------------------------------ */
+
+app-sidebar {
+    position: fixed;
+    top: var(--topbar-height);
+    left: 0; bottom: 0;
+    width: var(--sidebar-width);
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    z-index: 998;
+    padding: 1.5rem;
+    overflow-y: auto;
+    transition: transform 0.2s ease-in-out;
+}
+
+.layout-main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: var(--topbar-height);
+    padding-left: var(--sidebar-width);
+    transition: padding-left 0.2s ease-in-out;
+}
+
+.layout-main {
+    flex: 1 1 auto;
+    padding: 2rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* RESPONSIVE STATES (MOBILE & TABLET UI LAYOUT)                      */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 991px) {
+    .layout-topbar-menu-button {
+        display: inline-flex;
+    }    
+    app-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .layout-main-container {
+        padding-left: 0;
+    }
+
+    /* Sidebar Active ဖြစ်လာချိန် ပြသရန် */
+    .layout-mobile-active app-sidebar {
+        transform: translateX(0);
+    }
+}
+
+/* Desktop Sidebar ပိတ်ထားချိန် ပုံစံ */
+.layout-static-inactive app-sidebar {
+    transform: translateX(-100%);
+}
+.layout-static-inactive .layout-main-container {
+    padding-left: 0;
+}
+
+.layout-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.layout-menu ul {
+    list-style: none;
+    padding-left: 1rem;
+}
+
+.layout-menu a {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    text-decoration: none;
+    color: #334155;
+    border-radius: .5rem;
+}
+
+.layout-menu a:hover {
+    background: #f1f5f9;
+}
+
+.layout-submenu-toggler {
+    margin-left: auto;
+}
