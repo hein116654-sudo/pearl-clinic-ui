@@ -110,7 +110,7 @@ export class AppMenu {
                     {
                         label: 'Rooms',
                         icon: 'pi pi-building',
-                        routerLink: ['/rooms']
+                        routerLink: ['facility/room-list']
                     }
                 ]
             }

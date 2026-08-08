@@ -8,7 +8,8 @@ export const routes: Routes = [
         component: AppLayout,
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', component: DashboardPage }
+            { path: 'dashboard', component: DashboardPage },
+            { path: 'facility' , loadChildren: () => import('./features/facility/facility.routes') }
         ]
     }
 ];
