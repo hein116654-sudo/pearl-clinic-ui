@@ -1,0 +1,49 @@
+
+<form [formGroup]="allergyForm" [style]="{ width: '550px' }">
+  <div class="flexs item-center">
+  <div class="flex flex-col gap-5">
+    <div class="flex-auto">
+      <label for="patient" class="block mb-2">Patient Name</label>
+
+      <p-select id="patient" formControlName="patientId" [options]="patients()" optionLabel="name" optionValue="id"
+        style="width: 400px;">
+      </p-select>
+
+    </div>
+    <div class="flex-auto">
+      <label for="allergen" class="block mb-2">Allergen Name</label>
+      <input id="allergen" pInputText type="text" formControlName="allergenName" class="p-2" style="width: 400px;" />
+    </div>
+    <div class="flex-auto">
+      <label for="status" class="block mb-2">Serverity</label>
+    <p-select id="status"
+  formControlName="status"
+  [options]="allergenLevels"
+  placeholder="Select severity"
+   style="width: 400px;">
+  
+</p-select>
+</div>
+    <div class="flex-auto">
+      <label for="drug" class="block mb-2">Drug Family</label>
+      <input id="drug" pInputText type="text" formControlName="drugFamily" placeholder="Drug family" class="p-2"
+        style="width: 400px;" />
+    </div>
+
+    <div class="flex-auto">
+      <label for="reaction" class="block mb-2">Reaction</label>
+      <input id="reaction" pInputText type="text" formControlName="reaction" placeholder="Reaction"
+        style="width: 400px;" />
+        </div>
+      <div class="flex-auto">
+        <p-button [label]="
+          isEditMode
+          ? 'Update'
+          : 'Save'
+          " icon="pi pi-check" (onClick)="save()" [style]="{ width: '400px' }" >
+        </p-button>
+      </div>
+    
+  </div>
+  </div>
+</form>

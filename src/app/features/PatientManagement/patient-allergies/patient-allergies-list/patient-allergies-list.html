@@ -1,0 +1,63 @@
+<p-button label="Add Allergy" icon="pi pi-plus" (onClick)="openCreateDialog()"></p-button>
+
+<p-table 
+#dt 
+[value]="patientAllergens()"
+>
+<ng-template #header>
+    <tr>
+        <th>No</th>
+        <th>Patient Name</th>
+        <th>Allergen Name</th>
+        <th>Status</th>
+        <th>Drug Family</th>
+        <th>Remark</th>
+        <th>Action</th>
+    </tr>
+</ng-template>
+<ng-template #body let-allergen let-rowIndex = "rowIndex">
+    <tr>
+        <td>{{rowIndex+1}}</td>
+        <td>{{allergen.patientName}}</td>
+        <td>{{allergen.allergenName}}</td>
+        <td>{{allergen.status}}</td>
+        <td>{{allergen.drugFamily}}</td>
+        <td>{{allergen.reaction}}</td>
+         <td>
+
+        <div class="action-buttons">
+
+          <p-button icon="pi pi-pencil" [text]="true" severity="info" pTooltip="Edit Allergen"
+            (onClick)="editAllergen(allergen.id)">
+          </p-button>
+
+          <p-button icon="pi pi-trash" [text]="true" severity="danger" pTooltip="Delete Allergen"
+            (onClick)="deleteAllergen(allergen)">
+          </p-button>
+
+        </div>
+
+      </td>
+    </tr>
+</ng-template>
+    
+</p-table>
+
+<p-dialog
+[(visible)]="createDialogVisible"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+ [header]="
+ isEditMode()
+ ? 'Edit Patient Allergery' 
+ : 'Add Patient Allergy'
+ "
+ (onHide)="resetDialogState()"
+  >
+
+  <app-patient-allergies-create
+  [selectedAllergen]="selectedAllergenData"
+    (created)="onAllergyCreated()">
+  </app-patient-allergies-create>
+
+</p-dialog>

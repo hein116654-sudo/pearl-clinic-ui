@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
@@ -11,16 +11,15 @@ import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 
 import {
-  Practitioner,
+  
   PractitionerService,
-  CreatePractitionerInput,
-  UpdatePractitionerInput
-} from '../../service/practitioner.service';
+} from '../../services/practitioner.service';
 
 import {
-  Specialization,
   SpecializationService
-} from '../../service/specialization.service';
+} from '../../services/specialization.service';
+import { CreatePractitionerInput, Practitioner, UpdatePractitionerInput } from '../../models/practitioner';
+import { Specialization } from '../../models/specialization';
 
 
 @Component({
@@ -47,21 +46,21 @@ import {
 })
 export class PractitionerPage implements OnInit {
 
-
+private practitionerService=inject(PractitionerService)
+private specializationService=inject(SpecializationService);
   // ==========================================
   // Practitioner List
   // ==========================================
 
-  practitioners: Practitioner[] = [];
-
-  loading = false;
+  practitioners=signal<Practitioner[]>([]);
+ loading=signal<boolean>(false);
 
 
   // ==========================================
   // Specialization List
   // ==========================================
 
-  specializations: Specialization[] = [];
+  specializations=signal<Specialization[]>([]);
 
   selectedSpecializationId?: number;
 
@@ -83,14 +82,6 @@ export class PractitionerPage implements OnInit {
     this.emptyPractitioner();
 
 
-  // ==========================================
-  // Constructor
-  // ==========================================
-
-  constructor(
-    private practitionerService: PractitionerService,
-    private specializationService: SpecializationService
-  ) {}
 
 
   // ==========================================
@@ -112,7 +103,7 @@ export class PractitionerPage implements OnInit {
 
   loadPractitioners(): void {
 
-    this.loading = true;
+    this.loading.set(true);
 
     this.practitionerService
       .getAll()
@@ -125,9 +116,9 @@ export class PractitionerPage implements OnInit {
             data
           );
 
-          this.practitioners = data;
+          this.practitioners.set(data);
 
-          this.loading = false;
+          this.loading.set(false);
 
         },
 
@@ -138,7 +129,7 @@ export class PractitionerPage implements OnInit {
             error
           );
 
-          this.loading = false;
+          this.loading.set(false);
 
         }
 
@@ -164,7 +155,7 @@ export class PractitionerPage implements OnInit {
             data
           );
 
-          this.specializations = data;
+          this.specializations.set(data);
 
         },
 
@@ -249,7 +240,7 @@ export class PractitionerPage implements OnInit {
     // using specialization name
 
     const specialization =
-      this.specializations.find(
+      this.specializations().find(
         item =>
           item.name ===
           practitioner.specializationName
@@ -472,14 +463,14 @@ export class PractitionerPage implements OnInit {
 
         },
 
-        error: (error) => {
+        // error: (error) => {
 
-          console.error(
-            'Failed to delete practitioner:',
-            error
-          );
+        //   console.error(
+        //     'Failed to delete practitioner:',
+        //     error
+        //   );
 
-        }
+        // }
 
       });
 

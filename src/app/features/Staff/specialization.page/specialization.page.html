@@ -1,0 +1,83 @@
+<p-button
+  label="Add Specialization"
+  icon="pi pi-plus"
+  (onClick)="openCreateDialog()">
+</p-button>
+
+<p-table
+[value]="specializations()"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:25%">No.</th>
+            <th style="width:25%">Name</th>
+            <th style="width:25%">Description</th>
+            <th style="width:25%">Status</th>
+            <th style="width: 150px;">
+        Actions
+      </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-specialization>
+        <tr>
+            <td>{{ specializations().indexOf(specialization) + 1 }}</td>
+            <td>{{ specialization.name }}</td>
+            <td>{{ specialization.description }}</td>
+            <td>{{ specialization.status }}</td>
+             <td>
+
+        <div class="action-buttons">
+
+          <p-button icon="pi pi-pencil" [text]="true" severity="info" pTooltip="Edit Practitioner"
+            (onClick)="editSpecialization(specialization)">
+          </p-button>
+
+          <p-button icon="pi pi-trash" [text]="true" severity="danger" pTooltip="Delete Practitioner"
+            (onClick)="deleteSpecialization(specialization)">
+          </p-button>
+
+        </div>
+
+      </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+
+  <!-- Create / Edit Dialog -->
+<div class="card flex justify-center">
+    <p-dialog 
+    [visible]="dialogVisible()"
+     [modal]="true" 
+     [style]="{ width: '25rem' }"
+      (onHide)="dialogVisible.set(false)">
+        <ng-template #header>
+           <h1>{{ isEditMode() ? 'Edit Specialization' : 'Add Specialization' }}</h1>
+        </ng-template>
+        
+        <div class="flex items-center gap-4 mb-4">
+            <label for="name" class="font-semibold w-24">Name</label>
+            <input pInputText [(ngModel)]="specialization.name" id="name" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex items-center gap-4 mb-4">
+            <label for="description" class="font-semibold w-24">Description</label>
+            <input pInputText [(ngModel)]="specialization.description" id="description" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex items-center gap-4 mb-2">
+            <label for="status" class="font-semibold w-24">Status</label>
+            <input pInputText [(ngModel)]="specialization.status" id="status" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <ng-template #footer>
+            <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="dialogVisible.set(false)" />
+            <p-button 
+              [label]="isEditMode() ? 'Update' : 'Save'"  
+              (onClick)="saveSpecialization()" />
+        </ng-template>
+    </p-dialog>
+    </div>

@@ -42,7 +42,7 @@ export class AppMenu {
                     {
                         label: 'Patients',
                         icon: 'pi pi-users',
-                        routerLink: ['/patients']
+                        routerLink: ['/patientManagement/patient-list']
                     },
                     {
                         label: 'Appointments',
@@ -62,7 +62,7 @@ export class AppMenu {
                     {
                         label: 'Patient Allergies',
                         icon: 'pi pi-exclamation-triangle',
-                        routerLink: ['/patient-allergies']
+                        routerLink: ['/patientManagement/patient-allergies-list']
                     }
                 ]
             },

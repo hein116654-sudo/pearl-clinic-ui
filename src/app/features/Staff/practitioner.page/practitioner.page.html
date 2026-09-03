@@ -1,12 +1,4 @@
-<div>
-  <h1>Practitioners</h1>
-  <p>Manage clinic practitioners</p>
-</div>
-
-<p-button
-  label="Add Practitioner"
-  icon="pi pi-plus"
-  (onClick)="openNew()">
+<p-button label="Add Practitioner" icon="pi pi-plus" (onClick)="openNew()">
 </p-button>
 
 
@@ -14,22 +6,15 @@
 <!-- Practitioner Table -->
 <!-- ================================= -->
 
-<p-table
-  #dt
-  [value]="practitioners"
-  [loading]="loading"
-  [paginator]="true"
-  [rows]="10"
-  [rowsPerPageOptions]="[5, 10, 20]"
-  [globalFilterFields]="[
+<p-table #dt [value]="practitioners()" [loading]="loading()" [paginator]="true" [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20]" [globalFilterFields]="[
     'name',
     'licenseNumber',
     'email',
     'phone',
     'status',
     'specializationName'
-  ]"
-  responsiveLayout="scroll">
+  ]" responsiveLayout="scroll">
 
 
   <!-- Table Caption -->
@@ -42,17 +27,12 @@
         Practitioner List
       </div>
 
-      <input
-        pInputText
-        type="text"
-        placeholder="Search practitioner..."
-        (input)="
+      <input pInputText type="text" placeholder="Search practitioner..." (input)="
           dt.filterGlobal(
             $any($event.target).value,
             'contains'
           )
-        "
-      />
+        " />
 
     </div>
 
@@ -64,6 +44,7 @@
   <ng-template pTemplate="header">
 
     <tr>
+      <th>No</th>
 
       <th>License Number</th>
 
@@ -88,11 +69,14 @@
 
   <!-- Table Body -->
 
-  <ng-template
-    pTemplate="body"
-    let-practitioner>
+  <ng-template pTemplate="body" let-practitioner let-i="rowIndex">
 
     <tr>
+      <td>
+        {{i+1}}
+      </td>
+
+
 
       <td>
         {{ practitioner.licenseNumber }}
@@ -120,9 +104,7 @@
 
       <td>
 
-        <p-tag
-          [value]="practitioner.status"
-          [severity]="
+        <p-tag [value]="practitioner.status" [severity]="
             practitioner.status === 'ACTIVE'
               ? 'success'
               : 'danger'
@@ -135,19 +117,11 @@
 
         <div class="action-buttons">
 
-          <p-button
-            icon="pi pi-pencil"
-            [text]="true"
-            severity="info"
-            pTooltip="Edit Practitioner"
+          <p-button icon="pi pi-pencil" [text]="true" severity="info" pTooltip="Edit Practitioner"
             (onClick)="editPractitioner(practitioner)">
           </p-button>
 
-          <p-button
-            icon="pi pi-trash"
-            [text]="true"
-            severity="danger"
-            pTooltip="Delete Practitioner"
+          <p-button icon="pi pi-trash" [text]="true" severity="danger" pTooltip="Delete Practitioner"
             (onClick)="deletePractitioner(practitioner)">
           </p-button>
 
@@ -166,9 +140,7 @@
 
     <tr>
 
-      <td
-        colspan="7"
-        class="empty-message">
+      <td colspan="7" class="empty-message">
 
         No practitioners found.
 
@@ -185,13 +157,8 @@
 <!-- Add / Edit Dialog -->
 <!-- ================================= -->
 
-<p-dialog
-  [(visible)]="practitionerDialog"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  [style]="{ width: '550px' }"
-  [header]="
+<p-dialog [(visible)]="practitionerDialog" [modal]="true" [draggable]="false" [resizable]="false"
+  [style]="{ width: '550px' }" [header]="
     isEditMode
       ? 'Edit Practitioner'
       : 'Add Practitioner'
@@ -206,13 +173,7 @@
       Name
     </label>
 
-    <input
-      id="name"
-      pInputText
-      type="text"
-      [(ngModel)]="practitioner.name"
-      placeholder="Enter practitioner name"
-    />
+    <input id="name" pInputText type="text" [(ngModel)]="practitioner.name" placeholder="Enter practitioner name" />
 
   </div>
 
@@ -225,13 +186,8 @@
       License Number
     </label>
 
-    <input
-      id="licenseNumber"
-      pInputText
-      type="text"
-      [(ngModel)]="practitioner.licenseNumber"
-      placeholder="Enter license number"
-    />
+    <input id="licenseNumber" pInputText type="text" [(ngModel)]="practitioner.licenseNumber"
+      placeholder="Enter license number" />
 
   </div>
 
@@ -244,13 +200,7 @@
       Email
     </label>
 
-    <input
-      id="email"
-      pInputText
-      type="email"
-      [(ngModel)]="practitioner.email"
-      placeholder="Enter email address"
-    />
+    <input id="email" pInputText type="email" [(ngModel)]="practitioner.email" placeholder="Enter email address" />
 
   </div>
 
@@ -263,13 +213,7 @@
       Phone
     </label>
 
-    <input
-      id="phone"
-      pInputText
-      type="text"
-      [(ngModel)]="practitioner.phone"
-      placeholder="Enter phone number"
-    />
+    <input id="phone" pInputText type="text" [(ngModel)]="practitioner.phone" placeholder="Enter phone number" />
 
   </div>
 
@@ -284,14 +228,8 @@
       Specialization
     </label>
 
-    <p-select
-      id="specialization"
-      [options]="specializations"
-      [(ngModel)]="selectedSpecializationId"
-      optionLabel="name"
-      optionValue="id"
-      placeholder="Select specialization"
-      [style]="{
+    <p-select id="specialization" [options]="specializations()" [(ngModel)]="selectedSpecializationId"
+      optionLabel="name" optionValue="id" placeholder="Select specialization" [style]="{
         width: '100%'
       }">
     </p-select>
@@ -307,9 +245,7 @@
       Status
     </label>
 
-    <p-select
-      id="status"
-      [options]="[
+    <p-select id="status" [options]="[
         {
           label: 'Active',
           value: 'ACTIVE'
@@ -319,15 +255,10 @@
           value: 'INACTIVE'
         },
         {
-          label: 'Retired',
-          value: 'Retired'
+          label:'Retired',
+          value:'RETIRED'
         }
-      ]"
-      [(ngModel)]="practitioner.status"
-      optionLabel="label"
-      optionValue="value"
-      placeholder="Select status"
-      [style]="{
+      ]" [(ngModel)]="practitioner.status" optionLabel="label" optionValue="value" placeholder="Select status" [style]="{
         width: '100%'
       }">
     </p-select>
@@ -339,25 +270,17 @@
 
   <ng-template pTemplate="footer">
 
-    <p-button
-      label="Cancel"
-      icon="pi pi-times"
-      severity="secondary"
-      [text]="true"
-      (onClick)="
+    <p-button label="Cancel" icon="pi pi-times" severity="secondary" [text]="true" (onClick)="
         practitionerDialog = false
       ">
     </p-button>
 
 
-    <p-button
-      [label]="
+    <p-button [label]="
         isEditMode
           ? 'Update'
           : 'Save'
-      "
-      icon="pi pi-check"
-      (onClick)="savePractitioner()">
+      " icon="pi pi-check" (onClick)="savePractitioner()">
     </p-button>
 
   </ng-template>
